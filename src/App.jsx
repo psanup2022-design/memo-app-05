@@ -3,12 +3,21 @@ import './App.css'
 
 const STORAGE_KEY = 'memo-app-c05-notes'
 const EMPTY_TITLE = '\uC81C\uBAA9 \uC5C6\uB294 \uBA54\uBAA8'
+const EMPTY_ITEM_TEXT = '\uD56D\uBAA9\uC744 \uC785\uB825\uD558\uC138\uC694.'
+
+function createChecklistItem(text = '') {
+  return {
+    id: crypto.randomUUID(),
+    text,
+    checked: false,
+  }
+}
 
 function createBlankNote() {
   return {
     id: crypto.randomUUID(),
     title: '',
-    content: '',
+    checklist: [createChecklistItem()],
     updatedAt: new Date().toISOString(),
     isEditing: true,
   }
@@ -25,9 +34,22 @@ function loadNotesFromStorage() {
     return parsed.map((note) => ({
       id: note.id ?? crypto.randomUUID(),
       title: String(note.title ?? ''),
-      content: String(note.content ?? ''),
+      checklist: Array.isArray(note.checklist)
+        ? note.checklist.map((item) => ({
+            id: item?.id ?? crypto.randomUUID(),
+            text: String(item?.text ?? ''),
+            checked: Boolean(item?.checked),
+          }))
+        : String(note.content ?? '')
+            .split('\n')
+            .map((line) => line.trim())
+            .filter(Boolean)
+            .map((line) => createChecklistItem(line)),
       updatedAt: note.updatedAt ?? new Date().toISOString(),
       isEditing: false,
+    })).map((note) => ({
+      ...note,
+      checklist: note.checklist.length > 0 ? note.checklist : [createChecklistItem()],
     }))
   } catch {
     return []
@@ -49,8 +71,8 @@ export default function App() {
 
     return notes.filter((note) => {
       const title = note.title.toLowerCase()
-      const content = note.content.toLowerCase()
-      return title.includes(keyword) || content.includes(keyword)
+      const checklistText = note.checklist.map((item) => item.text.toLowerCase()).join(' ')
+      return title.includes(keyword) || checklistText.includes(keyword)
     })
   }, [notes, searchKeyword])
 
@@ -72,13 +94,22 @@ export default function App() {
     setNotes((prev) =>
       prev.map((note) =>
         note.id === noteId
-          ? {
-              ...note,
-              title: note.title.trim(),
-              content: note.content.trim(),
-              updatedAt: new Date().toISOString(),
-              isEditing: false,
-            }
+          ? (() => {
+              const normalizedItems = note.checklist
+                .map((item) => ({
+                  ...item,
+                  text: item.text.trim(),
+                }))
+                .filter((item) => item.text.length > 0)
+
+              return {
+                ...note,
+                title: note.title.trim(),
+                checklist: normalizedItems.length > 0 ? normalizedItems : [createChecklistItem()],
+                updatedAt: new Date().toISOString(),
+                isEditing: false,
+              }
+            })()
           : note,
       ),
     )
@@ -98,6 +129,72 @@ export default function App() {
             }
           : note,
       ),
+    )
+  }
+
+  const handleChecklistTextChange = (noteId, itemId, value) => {
+    setNotes((prev) =>
+      prev.map((note) =>
+        note.id !== noteId
+          ? note
+          : {
+              ...note,
+              checklist: note.checklist.map((item) =>
+                item.id === itemId
+                  ? {
+                      ...item,
+                      text: value,
+                    }
+                  : item,
+              ),
+            },
+      ),
+    )
+  }
+
+  const handleChecklistToggle = (noteId, itemId) => {
+    setNotes((prev) =>
+      prev.map((note) =>
+        note.id !== noteId
+          ? note
+          : {
+              ...note,
+              checklist: note.checklist.map((item) =>
+                item.id === itemId
+                  ? {
+                      ...item,
+                      checked: !item.checked,
+                    }
+                  : item,
+              ),
+            },
+      ),
+    )
+  }
+
+  const handleAddChecklistItem = (noteId) => {
+    setNotes((prev) =>
+      prev.map((note) =>
+        note.id !== noteId
+          ? note
+          : {
+              ...note,
+              checklist: [...note.checklist, createChecklistItem()],
+            },
+      ),
+    )
+  }
+
+  const handleRemoveChecklistItem = (noteId, itemId) => {
+    setNotes((prev) =>
+      prev.map((note) => {
+        if (note.id !== noteId) return note
+        const nextItems = note.checklist.filter((item) => item.id !== itemId)
+        return {
+          ...note,
+          checklist: nextItems.length > 0 ? nextItems : [createChecklistItem()],
+        }
+      }),
     )
   }
 
@@ -160,17 +257,52 @@ export default function App() {
                     value={note.title}
                     onChange={(e) => handleChange(note.id, 'title', e.target.value)}
                   />
-                  <textarea
-                    rows={7}
-                    placeholder={'\uBA54\uBAA8 \uB0B4\uC6A9\uC744 \uC785\uB825\uD558\uC138\uC694.'}
-                    value={note.content}
-                    onChange={(e) => handleChange(note.id, 'content', e.target.value)}
-                  />
+                  <div className="checklist-editor">
+                    {note.checklist.map((item) => (
+                      <div className="checklist-row" key={item.id}>
+                        <input
+                          type="checkbox"
+                          checked={item.checked}
+                          onChange={() => handleChecklistToggle(note.id, item.id)}
+                        />
+                        <input
+                          type="text"
+                          className="checklist-input"
+                          placeholder={EMPTY_ITEM_TEXT}
+                          value={item.text}
+                          onChange={(e) => handleChecklistTextChange(note.id, item.id, e.target.value)}
+                        />
+                        <button
+                          type="button"
+                          className="remove-item-btn"
+                          onClick={() => handleRemoveChecklistItem(note.id, item.id)}
+                        >
+                          {'\uC0AD\uC81C'}
+                        </button>
+                      </div>
+                    ))}
+                    <button type="button" className="add-item-btn" onClick={() => handleAddChecklistItem(note.id)}>
+                      {'+ \uCCB4\uD06C \uD56D\uBAA9 \uCD94\uAC00'}
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <div className="view-area">
                   <h2>{note.title || EMPTY_TITLE}</h2>
-                  <p>{note.content || '\uB0B4\uC6A9\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.'}</p>
+                  <ul className="checklist-view">
+                    {note.checklist.length === 0 ? (
+                      <li>{'\uB0B4\uC6A9\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.'}</li>
+                    ) : (
+                      note.checklist.map((item) => (
+                        <li key={item.id}>
+                          <label>
+                            <input type="checkbox" checked={item.checked} readOnly />
+                            <span>{item.text || '\uBE48 \uD56D\uBAA9'}</span>
+                          </label>
+                        </li>
+                      ))
+                    )}
+                  </ul>
                 </div>
               )}
             </article>

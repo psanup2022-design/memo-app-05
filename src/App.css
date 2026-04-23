@@ -102,8 +102,7 @@
   gap: 8px;
 }
 
-.editor-area input,
-.editor-area textarea {
+.editor-area input {
   width: 100%;
   border: 1px solid #d1d5db;
   border-radius: 10px;
@@ -111,20 +110,63 @@
   padding: 9px 10px;
 }
 
-.editor-area textarea {
-  resize: vertical;
-  min-height: 130px;
-}
-
 .view-area h2 {
   margin: 0;
   font-size: 1.05rem;
 }
 
-.view-area p {
+.checklist-editor {
+  display: grid;
+  gap: 8px;
+}
+
+.checklist-row {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.checklist-row input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+}
+
+.checklist-input {
+  min-width: 0;
+}
+
+.remove-item-btn {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  color: #b91c1c;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.add-item-btn {
+  justify-self: start;
+  border: 1px solid #2563eb;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.checklist-view {
   margin: 0;
-  line-height: 1.55;
-  white-space: pre-wrap;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
   color: #374151;
+}
+
+.checklist-view li label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
