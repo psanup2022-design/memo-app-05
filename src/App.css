@@ -218,8 +218,9 @@
   min-width: 28px;
 }
 
-/* 사각 체크 (파스텔 테두리) */
-.check-square {
+/* 사각 체크 — 네이티브 체크박스로 클릭·접근성 확실히 (수정 모드와 무관) */
+.check-square-wrap {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -227,30 +228,50 @@
   width: 22px;
   height: 22px;
   min-width: 22px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.check-square-native {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.check-square-face {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
   border-radius: 5px;
   border: 2px solid #e8b8d8;
   background: #fffefb;
-  padding: 0;
-  cursor: pointer;
-  box-sizing: border-box;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition:
     background 0.15s ease,
     border-color 0.15s ease,
     box-shadow 0.15s ease;
 }
 
-.check-square:hover {
+.check-square-wrap:hover .check-square-face {
   border-color: #c4b5f0;
   box-shadow: 0 0 0 2px rgba(200, 185, 242, 0.25);
 }
 
-.check-square--on {
+.check-square-wrap:has(.check-square-native:checked) .check-square-face {
   background: linear-gradient(145deg, #d4c8f7 0%, #c4b5f0 100%);
   border-color: #b8a9e8;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
-.check-square--on::after {
+.check-square-wrap:has(.check-square-native:checked) .check-square-face::after {
   content: '\2713';
   font-size: 12px;
   line-height: 1;
@@ -326,7 +347,7 @@
 }
 
 /* 완료 항목 입력 스타일 */
-.checklist-row:has(.check-square--on) .checklist-pill {
+.checklist-row:has(.check-square-native:checked) .checklist-pill {
   text-decoration: line-through;
   color: #b8a8c4;
   background: linear-gradient(180deg, #faf8ff 0%, #f3eeff 100%);

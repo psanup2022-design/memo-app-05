@@ -320,13 +320,16 @@ export default function App() {
                 <div className="checklist-editor">
                   {note.checklist.map((item) => (
                     <div className="checklist-row" key={item.id}>
-                      <button
-                        type="button"
-                        className={`check-square ${item.checked ? 'check-square--on' : ''}`}
-                        aria-pressed={item.checked}
-                        aria-label={item.checked ? '\uC644\uB8CC \uCDE8\uC18C' : '\uC644\uB8CC'}
-                        onClick={() => handleChecklistToggle(note.id, item.id)}
-                      />
+                      <label className="check-square-wrap">
+                        <input
+                          type="checkbox"
+                          className="check-square-native"
+                          checked={item.checked}
+                          onChange={() => handleChecklistToggle(note.id, item.id)}
+                          aria-label={item.checked ? '\uC644\uB8CC \uCDE8\uC18C' : '\uC644\uB8CC'}
+                        />
+                        <span className="check-square-face" aria-hidden="true" />
+                      </label>
                       <input
                         type="text"
                         className="checklist-pill"
