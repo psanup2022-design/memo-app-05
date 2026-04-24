@@ -115,44 +115,93 @@
   font-size: 1.05rem;
 }
 
+.checklist-hint {
+  margin: 0 0 4px;
+  font-size: 11px;
+  color: #9ca3af;
+  line-height: 1.35;
+}
+
 .checklist-editor {
   display: grid;
-  gap: 8px;
+  gap: 6px;
 }
 
 .checklist-row {
   display: grid;
-  grid-template-columns: 20px 1fr auto;
-  gap: 8px;
+  grid-template-columns: 22px 1fr 28px;
+  gap: 10px;
   align-items: center;
 }
 
-.checklist-row input[type='checkbox'] {
-  width: 16px;
-  height: 16px;
+.check-circle {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 50%;
+  border: 2px solid #6b7280;
+  background: #fff;
+  padding: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.check-circle:hover {
+  border-color: #374151;
+}
+
+.check-circle--on {
+  background: #4b5563;
+  border-color: #4b5563;
+  box-shadow: inset 0 0 0 2px #fffbe6;
 }
 
 .checklist-input {
   min-width: 0;
+  border: none;
+  border-bottom: 1px solid #d1d5db;
+  border-radius: 0;
+  padding: 6px 2px;
+  background: transparent;
+}
+
+.checklist-input:focus {
+  border-bottom-color: #2563eb;
+  outline: none;
 }
 
 .remove-item-btn {
-  border: 1px solid #d1d5db;
+  border: none;
   border-radius: 8px;
-  background: #fff;
-  color: #b91c1c;
-  padding: 6px 8px;
+  background: transparent;
+  color: #9ca3af;
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 4px;
   cursor: pointer;
+}
+
+.remove-item-btn:hover {
+  color: #b91c1c;
+  background: rgba(185, 28, 28, 0.08);
 }
 
 .add-item-btn {
   justify-self: start;
-  border: 1px solid #2563eb;
+  margin-top: 2px;
+  border: 1px dashed #93c5fd;
   border-radius: 8px;
-  background: #eff6ff;
-  color: #1d4ed8;
+  background: transparent;
+  color: #2563eb;
+  font-size: 12px;
   padding: 6px 10px;
   cursor: pointer;
+}
+
+.add-item-btn:hover {
+  background: #eff6ff;
+  border-style: solid;
 }
 
 .checklist-view {
@@ -164,9 +213,30 @@
   color: #374151;
 }
 
-.checklist-view li label {
-  display: inline-flex;
+.checklist-view-row {
+  display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  min-height: 1.5em;
+}
+
+.check-circle-view {
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  border-radius: 50%;
+  border: 2px solid #6b7280;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.check-circle-view--on {
+  background: #6b7280;
+  box-shadow: inset 0 0 0 2px #fffbe6;
+}
+
+.checklist-view-text--done {
+  text-decoration: line-through;
+  color: #9ca3af;
 }
 

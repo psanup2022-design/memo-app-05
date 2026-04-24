@@ -1,2 +1,2 @@
 @echo off
-start "" "d:\00 2026\cursor\c05\dist\index.html"
+start "" "https://psanup2022-design.github.io/memo-app-05/"

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
 
 const STORAGE_KEY = 'memo-app-c05-notes'
@@ -59,10 +59,19 @@ function loadNotesFromStorage() {
 export default function App() {
   const [notes, setNotes] = useState(loadNotesFromStorage)
   const [searchKeyword, setSearchKeyword] = useState('')
+  const pendingChecklistFocusId = useRef(null)
+  const checklistInputRefs = useRef({})
 
   useEffect(() => {
     const serializableNotes = notes.map(({ isEditing, ...note }) => note)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(serializableNotes))
+  }, [notes])
+
+  useEffect(() => {
+    const id = pendingChecklistFocusId.current
+    if (!id) return
+    pendingChecklistFocusId.current = null
+    queueMicrotask(() => checklistInputRefs.current[id]?.focus())
   }, [notes])
 
   const filteredNotes = useMemo(() => {
@@ -198,6 +207,45 @@ export default function App() {
     )
   }
 
+  const handleChecklistKeyDown = (noteId, itemId, e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      const newItem = createChecklistItem()
+      pendingChecklistFocusId.current = newItem.id
+      setNotes((prev) =>
+        prev.map((note) => {
+          if (note.id !== noteId) return note
+          const idx = note.checklist.findIndex((item) => item.id === itemId)
+          if (idx === -1) return note
+          const next = [...note.checklist]
+          next.splice(idx + 1, 0, newItem)
+          return { ...note, checklist: next }
+        }),
+      )
+      return
+    }
+
+    if (e.key !== 'Backspace') return
+
+    setNotes((prev) => {
+      const target = prev.find((n) => n.id === noteId)
+      if (!target) return prev
+      const idx = target.checklist.findIndex((item) => item.id === itemId)
+      const row = target.checklist[idx]
+      if (!row || row.text !== '' || target.checklist.length <= 1) return prev
+      e.preventDefault()
+      const prevRow = target.checklist[idx - 1]
+      if (prevRow) pendingChecklistFocusId.current = prevRow.id
+      return prev.map((note) => {
+        if (note.id !== noteId) return note
+        return {
+          ...note,
+          checklist: note.checklist.filter((item) => item.id !== itemId),
+        }
+      })
+    })
+  }
+
   return (
     <div className="app">
       <header className="app-header">
@@ -258,31 +306,39 @@ export default function App() {
                     onChange={(e) => handleChange(note.id, 'title', e.target.value)}
                   />
                   <div className="checklist-editor">
+                    <p className="checklist-hint">{'Enter: \uC0C8 \uD56D\uBAA9 · \uBE48 \uD589\uC5D0\uC11C Backspace: \uD589 \uC0AD\uC81C'}</p>
                     {note.checklist.map((item) => (
                       <div className="checklist-row" key={item.id}>
-                        <input
-                          type="checkbox"
-                          checked={item.checked}
-                          onChange={() => handleChecklistToggle(note.id, item.id)}
+                        <button
+                          type="button"
+                          className={`check-circle ${item.checked ? 'check-circle--on' : ''}`}
+                          aria-pressed={item.checked}
+                          aria-label={item.checked ? '\uC644\uB8CC \uCDE8\uC18C' : '\uC644\uB8CC'}
+                          onClick={() => handleChecklistToggle(note.id, item.id)}
                         />
                         <input
                           type="text"
                           className="checklist-input"
                           placeholder={EMPTY_ITEM_TEXT}
                           value={item.text}
+                          ref={(el) => {
+                            checklistInputRefs.current[item.id] = el
+                          }}
                           onChange={(e) => handleChecklistTextChange(note.id, item.id, e.target.value)}
+                          onKeyDown={(e) => handleChecklistKeyDown(note.id, item.id, e)}
                         />
                         <button
                           type="button"
                           className="remove-item-btn"
+                          aria-label={'\uD56D\uBAA9 \uC0AD\uC81C'}
                           onClick={() => handleRemoveChecklistItem(note.id, item.id)}
                         >
-                          {'\uC0AD\uC81C'}
+                          {'\u00D7'}
                         </button>
                       </div>
                     ))}
                     <button type="button" className="add-item-btn" onClick={() => handleAddChecklistItem(note.id)}>
-                      {'+ \uCCB4\uD06C \uD56D\uBAA9 \uCD94\uAC00'}
+                      {'+ \uD56D\uBAA9'}
                     </button>
                   </div>
                 </div>
@@ -294,11 +350,14 @@ export default function App() {
                       <li>{'\uB0B4\uC6A9\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.'}</li>
                     ) : (
                       note.checklist.map((item) => (
-                        <li key={item.id}>
-                          <label>
-                            <input type="checkbox" checked={item.checked} readOnly />
-                            <span>{item.text || '\uBE48 \uD56D\uBAA9'}</span>
-                          </label>
+                        <li key={item.id} className="checklist-view-row">
+                          <span
+                            className={`check-circle-view ${item.checked ? 'check-circle-view--on' : ''}`}
+                            aria-hidden
+                          />
+                          <span className={item.checked ? 'checklist-view-text--done' : ''}>
+                            {item.text || '\uBE48 \uD56D\uBAA9'}
+                          </span>
                         </li>
                       ))
                     )}
