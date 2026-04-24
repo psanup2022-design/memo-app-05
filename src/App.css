@@ -1,242 +1,387 @@
 .app {
-  width: min(1100px, 92vw);
-  margin: 32px auto;
+  width: min(960px, 94vw);
+  margin: 0 auto;
+  padding: 28px 16px 120px;
+  position: relative;
 }
 
-.app-header h1 {
+/* —— 헤더 (스티커 느낌 타이틀) —— */
+.app-header {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.app-header__title {
   margin: 0;
-  font-size: 2rem;
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
-.app-header p {
-  margin: 8px 0 0;
-  color: #4b5563;
+.app-header__title-inner {
+  display: inline-block;
+  padding: 10px 22px 12px;
+  border-radius: 999px;
+  color: #fffefb;
+  background: linear-gradient(180deg, #c9b8f2 0%, #b8a9e8 55%, #a898e0 100%);
+  text-shadow:
+    0 0 0 2px #9b8ad4,
+    0 1px 0 #7d6bb8,
+    0 2px 0 rgba(123, 105, 180, 0.35);
+  box-shadow:
+    0 3px 0 #8f7bc9,
+    0 8px 24px rgba(155, 138, 212, 0.45);
+  border: 2px solid #dfd6ff;
 }
 
+.app-header__sub {
+  margin: 14px 0 0;
+  font-size: 0.92rem;
+  color: #8b7fa3;
+}
+
+/* —— 툴바 —— */
 .toolbar {
-  margin-top: 20px;
+  margin-top: 22px;
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .toolbar input {
   flex: 1;
-  min-width: 260px;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  background: #fff;
-  padding: 10px 12px;
+  min-width: 220px;
+  border: 2px solid var(--pink-border, #f5b8d0);
+  border-radius: 999px;
+  background: #fffefb;
+  padding: 11px 18px;
+  color: var(--text, #5c5266);
+  box-shadow: inset 0 1px 3px rgba(255, 182, 210, 0.25);
+}
+
+.toolbar input:focus {
+  outline: none;
+  border-color: #c4b5f0;
+  box-shadow:
+    inset 0 1px 3px rgba(255, 182, 210, 0.2),
+    0 0 0 3px rgba(200, 185, 242, 0.35);
 }
 
 .primary-btn {
   border: none;
-  border-radius: 10px;
-  padding: 10px 14px;
-  background: #2563eb;
-  color: #fff;
+  border-radius: 999px;
+  padding: 11px 22px;
+  background: linear-gradient(180deg, #d4c8f7 0%, #c4b5f0 100%);
+  color: #4f4670;
   font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 3px 0 #a898e0;
+  border: 2px solid #e8e0ff;
 }
 
+.primary-btn:hover {
+  filter: brightness(1.04);
+}
+
+.primary-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #a898e0;
+}
+
+/* —— 그리드 —— */
 .notes-grid {
-  margin-top: 18px;
+  margin-top: 22px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 18px;
 }
 
 .empty-state {
-  margin: 10px 0;
-  color: #6b7280;
+  margin: 16px 0;
+  padding: 20px;
+  text-align: center;
+  color: #9b8ab0;
+  background: rgba(255, 254, 251, 0.65);
+  border-radius: 20px;
+  border: 2px dashed #f0c8dd;
 }
 
+/* —— 메모 카드 —— */
 .note-card {
-  background: #fffbe6;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 12px;
-  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+  background: #fffefb;
+  border: 2px solid #f5d4e8;
+  border-radius: 22px;
+  padding: 14px 16px 16px;
+  box-shadow:
+    0 4px 0 #f8e0ec,
+    0 12px 28px rgba(184, 169, 232, 0.18);
 }
 
 .note-head {
   display: flex;
   gap: 8px;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .note-date {
-  font-size: 12px;
-  color: #6b7280;
+  font-size: 11px;
+  color: #a898c4;
 }
 
 .note-actions {
   display: flex;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
 .note-actions button {
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  padding: 5px 9px;
-  background: #fff;
+  border: 2px solid #f0c8dd;
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: #fff5f9;
+  color: #7d6b9a;
   cursor: pointer;
+  font-size: 12px;
+}
+
+.note-actions button:hover {
+  background: #ffeef6;
+  border-color: #e8b8d8;
 }
 
 .note-actions .save-btn {
-  border-color: #15803d;
-  color: #15803d;
-  font-weight: 600;
+  border-color: #b8e0c8;
+  background: #f0fff5;
+  color: #3d7a55;
+  font-weight: 700;
 }
 
 .note-actions .danger-btn {
-  border-color: #dc2626;
-  color: #dc2626;
+  border-color: #ffc4d4;
+  background: #fff5f7;
+  color: #c94a6b;
 }
 
-.editor-area,
-.view-area {
-  margin-top: 10px;
+/* —— 본문 (제목 + 체크리스트) —— */
+.note-body {
+  margin-top: 12px;
   display: grid;
-  gap: 8px;
+  gap: 10px;
 }
 
-.editor-area input {
+.title-pill {
   width: 100%;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  background: #fff;
-  padding: 9px 10px;
+  border: 2px solid #f5c9df;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff0f6 0%, #ffe4ec 100%);
+  padding: 10px 16px;
+  color: #5c5266;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
-.view-area h2 {
-  margin: 0;
-  font-size: 1.05rem;
+.title-pill::placeholder {
+  color: #c4a8c0;
+}
+
+.title-pill:focus {
+  outline: none;
+  border-color: #c4b5f0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 0 0 3px rgba(200, 185, 242, 0.3);
 }
 
 .checklist-hint {
-  margin: 0 0 4px;
+  margin: 0;
   font-size: 11px;
-  color: #9ca3af;
-  line-height: 1.35;
+  color: #c4a8c0;
+  line-height: 1.4;
 }
 
 .checklist-editor {
   display: grid;
-  gap: 6px;
+  gap: 8px;
 }
 
 .checklist-row {
-  display: grid;
-  grid-template-columns: 22px 1fr 28px;
-  gap: 10px;
+  display: flex;
   align-items: center;
+  gap: 10px;
 }
 
-.check-circle {
-  width: 18px;
-  height: 18px;
-  min-width: 18px;
-  border-radius: 50%;
-  border: 2px solid #6b7280;
-  background: #fff;
+.checklist-row__spacer {
+  flex: 0 0 28px;
+  width: 28px;
+  min-width: 28px;
+}
+
+/* 사각 체크 (파스텔 테두리) */
+.check-square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 5px;
+  border: 2px solid #e8b8d8;
+  background: #fffefb;
   padding: 0;
   cursor: pointer;
   box-sizing: border-box;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
-.check-circle:hover {
-  border-color: #374151;
+.check-square:hover {
+  border-color: #c4b5f0;
+  box-shadow: 0 0 0 2px rgba(200, 185, 242, 0.25);
 }
 
-.check-circle--on {
-  background: #4b5563;
-  border-color: #4b5563;
-  box-shadow: inset 0 0 0 2px #fffbe6;
+.check-square--on {
+  background: linear-gradient(145deg, #d4c8f7 0%, #c4b5f0 100%);
+  border-color: #b8a9e8;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
-.checklist-input {
+.check-square--on::after {
+  content: '\2713';
+  font-size: 12px;
+  line-height: 1;
+  color: #fffefb;
+  font-weight: 700;
+}
+
+/* 캡슐형 입력 */
+.checklist-pill {
+  flex: 1;
   min-width: 0;
-  border: none;
-  border-bottom: 1px solid #d1d5db;
-  border-radius: 0;
-  padding: 6px 2px;
-  background: transparent;
+  border: 2px solid #ffd0e0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff5f9 0%, #ffe4ec 100%);
+  padding: 9px 16px;
+  color: #5c5266;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.7);
 }
 
-.checklist-input:focus {
-  border-bottom-color: #2563eb;
+.checklist-pill::placeholder {
+  color: #dcb8d0;
+}
+
+.checklist-pill:focus {
   outline: none;
+  border-color: #c4b5f0;
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.7),
+    0 0 0 3px rgba(200, 185, 242, 0.28);
+}
+
+.checklist-pill:disabled {
+  opacity: 0.85;
 }
 
 .remove-item-btn {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
   border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: #9ca3af;
-  font-size: 1.25rem;
+  border-radius: 50%;
+  background: #fff0f4;
+  color: #d889a8;
+  font-size: 1.1rem;
   line-height: 1;
-  padding: 4px;
+  padding: 0;
   cursor: pointer;
 }
 
 .remove-item-btn:hover {
-  color: #b91c1c;
-  background: rgba(185, 28, 28, 0.08);
+  color: #c94a6b;
+  background: #ffe0ea;
 }
 
 .add-item-btn {
   justify-self: start;
   margin-top: 2px;
-  border: 1px dashed #93c5fd;
-  border-radius: 8px;
-  background: transparent;
-  color: #2563eb;
+  border: 2px dashed #f0b8d8;
+  border-radius: 999px;
+  background: rgba(255, 245, 250, 0.8);
+  color: #b8a9e8;
   font-size: 12px;
-  padding: 6px 10px;
+  font-weight: 700;
+  padding: 8px 16px;
   cursor: pointer;
 }
 
 .add-item-btn:hover {
-  background: #eff6ff;
-  border-style: solid;
+  background: #fff5fb;
+  border-color: #c4b5f0;
+  color: #8f7bc9;
 }
 
-.checklist-view {
-  margin: 0;
-  padding-left: 0;
-  list-style: none;
-  display: grid;
-  gap: 6px;
-  color: #374151;
-}
-
-.checklist-view-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 1.5em;
-}
-
-.check-circle-view {
-  width: 14px;
-  height: 14px;
-  min-width: 14px;
-  border-radius: 50%;
-  border: 2px solid #6b7280;
-  box-sizing: border-box;
-  flex-shrink: 0;
-}
-
-.check-circle-view--on {
-  background: #6b7280;
-  box-shadow: inset 0 0 0 2px #fffbe6;
-}
-
-.checklist-view-text--done {
+/* 완료 항목 입력 스타일 */
+.checklist-row:has(.check-square--on) .checklist-pill {
   text-decoration: line-through;
-  color: #9ca3af;
+  color: #b8a8c4;
+  background: linear-gradient(180deg, #faf8ff 0%, #f3eeff 100%);
+  border-color: #e8e0f5;
 }
 
+/* —— 하단 장식 (말풍선 + 토끼) —— */
+.app-footer {
+  position: fixed;
+  right: max(12px, calc(50vw - 480px));
+  bottom: 12px;
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.app-footer__speech {
+  position: relative;
+  margin-right: -6px;
+  margin-bottom: 18px;
+  padding: 8px 12px 10px;
+  max-width: 140px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #6b5d7a;
+  background: #fffefb;
+  border: 2px solid #8b7a9e;
+  border-radius: 10px;
+  box-shadow: 2px 3px 0 rgba(139, 122, 158, 0.15);
+}
+
+.app-footer__speech::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  bottom: 10px;
+  border-width: 6px 0 6px 8px;
+  border-style: solid;
+  border-color: transparent transparent transparent #8b7a9e;
+}
+
+.app-footer__speech span {
+  display: block;
+}
+
+.app-footer__bunny {
+  filter: drop-shadow(2px 4px 6px rgba(184, 169, 232, 0.35));
+}
+
+@media (max-width: 520px) {
+  .app-footer {
+    right: 8px;
+    transform: scale(0.88);
+    transform-origin: bottom right;
+  }
+}

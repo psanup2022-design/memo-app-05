@@ -168,6 +168,7 @@ export default function App() {
           ? note
           : {
               ...note,
+              updatedAt: new Date().toISOString(),
               checklist: note.checklist.map((item) =>
                 item.id === itemId
                   ? {
@@ -249,8 +250,14 @@ export default function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>{'\uBA54\uBAA8\uC571'}</h1>
-        <p>{'\uC0C8\uBA54\uBAA8 \uC0DD\uC131, \uC218\uC815/\uC800\uC7A5, \uC0AD\uC81C, \uAC80\uC0C9 \uAE30\uB2A5'}</p>
+        <h1 className="app-header__title">
+          <span className="app-header__title-inner">
+            {'\u2665'} {'\uBA54\uBAA8'} check {'\u2665'}
+          </span>
+        </h1>
+        <p className="app-header__sub">
+          {'\uC0C8\uBA54\uBAA8 · \uCCB4\uD06C · \uAC80\uC0C9 · \uBC14\uB85C \uC785\uB825\uD574\uC694'}
+        </p>
       </header>
 
       <section className="toolbar">
@@ -297,36 +304,41 @@ export default function App() {
                 </div>
               </div>
 
-              {note.isEditing ? (
-                <div className="editor-area">
-                  <input
-                    type="text"
-                    placeholder={'\uBA54\uBAA8 \uC81C\uBAA9'}
-                    value={note.title}
-                    onChange={(e) => handleChange(note.id, 'title', e.target.value)}
-                  />
-                  <div className="checklist-editor">
-                    <p className="checklist-hint">{'Enter: \uC0C8 \uD56D\uBAA9 · \uBE48 \uD589\uC5D0\uC11C Backspace: \uD589 \uC0AD\uC81C'}</p>
-                    {note.checklist.map((item) => (
-                      <div className="checklist-row" key={item.id}>
-                        <button
-                          type="button"
-                          className={`check-circle ${item.checked ? 'check-circle--on' : ''}`}
-                          aria-pressed={item.checked}
-                          aria-label={item.checked ? '\uC644\uB8CC \uCDE8\uC18C' : '\uC644\uB8CC'}
-                          onClick={() => handleChecklistToggle(note.id, item.id)}
-                        />
-                        <input
-                          type="text"
-                          className="checklist-input"
-                          placeholder={EMPTY_ITEM_TEXT}
-                          value={item.text}
-                          ref={(el) => {
-                            checklistInputRefs.current[item.id] = el
-                          }}
-                          onChange={(e) => handleChecklistTextChange(note.id, item.id, e.target.value)}
-                          onKeyDown={(e) => handleChecklistKeyDown(note.id, item.id, e)}
-                        />
+              <div className="note-body">
+                <input
+                  type="text"
+                  className="title-pill"
+                  placeholder={EMPTY_TITLE}
+                  value={note.title}
+                  onChange={(e) => handleChange(note.id, 'title', e.target.value)}
+                />
+                {note.isEditing ? (
+                  <p className="checklist-hint">
+                    {'Enter: \uC0C8 \uD56D\uBAA9 · \uBE48 \uD589 Backspace: \uD589 \uC0AD\uC81C'}
+                  </p>
+                ) : null}
+                <div className="checklist-editor">
+                  {note.checklist.map((item) => (
+                    <div className="checklist-row" key={item.id}>
+                      <button
+                        type="button"
+                        className={`check-square ${item.checked ? 'check-square--on' : ''}`}
+                        aria-pressed={item.checked}
+                        aria-label={item.checked ? '\uC644\uB8CC \uCDE8\uC18C' : '\uC644\uB8CC'}
+                        onClick={() => handleChecklistToggle(note.id, item.id)}
+                      />
+                      <input
+                        type="text"
+                        className="checklist-pill"
+                        placeholder={EMPTY_ITEM_TEXT}
+                        value={item.text}
+                        ref={(el) => {
+                          checklistInputRefs.current[item.id] = el
+                        }}
+                        onChange={(e) => handleChecklistTextChange(note.id, item.id, e.target.value)}
+                        onKeyDown={(e) => handleChecklistKeyDown(note.id, item.id, e)}
+                      />
+                      {note.isEditing ? (
                         <button
                           type="button"
                           className="remove-item-btn"
@@ -335,39 +347,43 @@ export default function App() {
                         >
                           {'\u00D7'}
                         </button>
-                      </div>
-                    ))}
-                    <button type="button" className="add-item-btn" onClick={() => handleAddChecklistItem(note.id)}>
-                      {'+ \uD56D\uBAA9'}
-                    </button>
-                  </div>
+                      ) : (
+                        <span className="checklist-row__spacer" aria-hidden="true" />
+                      )}
+                    </div>
+                  ))}
+                  <button type="button" className="add-item-btn" onClick={() => handleAddChecklistItem(note.id)}>
+                    {'+ \uD56D\uBAA9'}
+                  </button>
                 </div>
-              ) : (
-                <div className="view-area">
-                  <h2>{note.title || EMPTY_TITLE}</h2>
-                  <ul className="checklist-view">
-                    {note.checklist.length === 0 ? (
-                      <li>{'\uB0B4\uC6A9\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.'}</li>
-                    ) : (
-                      note.checklist.map((item) => (
-                        <li key={item.id} className="checklist-view-row">
-                          <span
-                            className={`check-circle-view ${item.checked ? 'check-circle-view--on' : ''}`}
-                            aria-hidden
-                          />
-                          <span className={item.checked ? 'checklist-view-text--done' : ''}>
-                            {item.text || '\uBE48 \uD56D\uBAA9'}
-                          </span>
-                        </li>
-                      ))
-                    )}
-                  </ul>
-                </div>
-              )}
+              </div>
             </article>
           ))
         )}
       </main>
+
+      <footer className="app-footer" aria-hidden="true">
+        <div className="app-footer__speech">
+          <span>{'\uC624\uB298\uB3C4 \uD654\uC774\uD305!'}</span>
+        </div>
+        <div className="app-footer__bunny" aria-hidden="true">
+          <svg viewBox="0 0 120 100" width="100" height="84" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="58" cy="62" rx="38" ry="32" fill="#fffefb" stroke="#e8d4f0" strokeWidth="2" />
+            <ellipse cx="40" cy="58" rx="6" ry="7" fill="#ffd0dc" />
+            <ellipse cx="76" cy="58" rx="6" ry="7" fill="#ffd0dc" />
+            <circle cx="48" cy="52" r="3" fill="#5c5266" />
+            <path d="M72 50 Q78 48 78 52" stroke="#5c5266" strokeWidth="2" fill="none" strokeLinecap="round" />
+            <ellipse cx="58" cy="68" rx="4" ry="2.5" fill="#ffd0dc" opacity="0.7" />
+            <path
+              d="M22 28 Q18 8 38 18 Q48 4 58 20 Q68 4 78 18 Q98 8 94 28 Q88 36 58 32 Q30 36 22 28"
+              fill="#c4b5f0"
+              stroke="#b8a9e8"
+              strokeWidth="1.5"
+            />
+            <path d="M36 20 Q44 26 52 22" fill="none" stroke="#dfd6f5" strokeWidth="1" opacity="0.8" />
+          </svg>
+        </div>
+      </footer>
     </div>
   )
 }
