@@ -255,7 +255,8 @@ export default function App() {
   }
 
   return (
-    <div className="app">
+    <div className="app-shell">
+      <div className="app">
       <header className="app-header">
         <h1 className="app-header__title">
           <span className="app-header__title-inner">{'\u2665'}check list{'\u2665'}</span>
@@ -277,6 +278,12 @@ export default function App() {
           onChange={(e) => setSearchKeyword(e.target.value)}
         />
       </section>
+
+      <p className="cache-hint">
+        {
+          '\uBC14\uBA74\uC774 \uC608\uC804\uACFC \uAC19\uC73C\uBA74 \uAC15\uB825 \uC0C8\uB85C\uACE0\uCE68(Ctrl+Shift+R)\uC744 \uB20C\uB7EC\uC8FC\uC138\uC694.'
+        }
+      </p>
 
       <main className="notes-grid" aria-live="polite">
         {filteredNotes.length === 0 ? (
@@ -367,6 +374,7 @@ export default function App() {
           ))
         )}
       </main>
+      </div>
 
       <footer className="app-footer" aria-hidden="true">
         <div className="app-footer__speech">
