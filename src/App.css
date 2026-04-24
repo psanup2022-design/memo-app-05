@@ -2,7 +2,7 @@
 
 .app-shell {
   min-height: 100vh;
-  padding: 96px 12px 32px;
+  padding: 20px 12px 110px;
   background:
     radial-gradient(ellipse 90% 55% at 20% 0%, rgba(200, 180, 255, 0.55), transparent 55%),
     radial-gradient(ellipse 70% 50% at 100% 30%, rgba(255, 200, 230, 0.45), transparent 50%),
@@ -480,11 +480,11 @@
   border-color: rgba(200, 185, 230, 0.35);
 }
 
-/* —— 왼쪽 상단: 토끼 + 말풍선 —— */
+/* —— 하단 오른쪽: 말풍선 + 토끼(원래 위치) —— */
 .app-mascot {
   position: fixed;
-  top: 14px;
-  left: 14px;
+  right: max(10px, calc(50vw - 460px));
+  bottom: 10px;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -495,9 +495,9 @@
 
 .app-mascot__speech {
   position: relative;
-  margin-left: -4px;
-  margin-bottom: 18px;
-  padding: 8px 12px 9px;
+  margin-right: -4px;
+  margin-bottom: 22px;
+  padding: 10px 14px 11px;
   max-width: min(200px, 42vw);
   font-size: 12px;
   line-height: 1.45;
@@ -513,11 +513,11 @@
 .app-mascot__speech::after {
   content: '';
   position: absolute;
-  left: -9px;
+  right: -9px;
   bottom: 12px;
-  border-width: 7px 9px 7px 0;
+  border-width: 7px 0 7px 9px;
   border-style: solid;
-  border-color: transparent #b09078 transparent transparent;
+  border-color: transparent transparent transparent #b09078;
 }
 
 .app-mascot__speech span {
@@ -534,13 +534,8 @@
 
 @media (max-width: 520px) {
   .app-mascot {
-    transform: scale(0.88);
-    transform-origin: top left;
-    top: 8px;
-    left: 6px;
-  }
-
-  .app-shell {
-    padding-top: 88px;
+    right: 6px;
+    transform: scale(0.85);
+    transform-origin: bottom right;
   }
 }

@@ -478,6 +478,9 @@ export default function App() {
       </div>
 
       <aside className="app-mascot" aria-label={'\uB9C8\uC2A4\uCF54\uD2B8'}>
+        <div className="app-mascot__speech">
+          <span>{'\uC548\uB155!'}</span>
+        </div>
         <div className="app-mascot__bunny" aria-hidden="true">
           <svg viewBox="0 0 120 100" width="100" height="84" xmlns="http://www.w3.org/2000/svg">
             <ellipse cx="58" cy="62" rx="38" ry="32" fill="#fffefb" stroke="#e8d4f0" strokeWidth="2" />
@@ -494,9 +497,6 @@ export default function App() {
             />
             <path d="M36 20 Q44 26 52 22" fill="none" stroke="#dfd6f5" strokeWidth="1" opacity="0.8" />
           </svg>
-        </div>
-        <div className="app-mascot__speech">
-          <span>{'\uC548\uB155!'}</span>
         </div>
       </aside>
     </div>
