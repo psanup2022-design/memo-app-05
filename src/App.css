@@ -206,74 +206,61 @@
   gap: 8px;
 }
 
+/* 그리드로 체크 칸과 입력이 절대 겹치지 않게 (클릭 누락 방지) */
 .checklist-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 36px;
   align-items: center;
-  gap: 10px;
+  column-gap: 10px;
 }
 
 .checklist-row__spacer {
-  flex: 0 0 28px;
+  grid-column: 3;
+  justify-self: center;
   width: 28px;
-  min-width: 28px;
+  height: 28px;
 }
 
-/* 사각 체크 — 네이티브 체크박스로 클릭·접근성 확실히 (수정 모드와 무관) */
-.check-square-wrap {
-  position: relative;
+/* 사각 체크 — 버튼(항상 클릭 가능, 수정 버튼과 무관) */
+.check-square-btn {
+  grid-column: 1;
+  justify-self: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 22px;
-  width: 22px;
-  height: 22px;
-  min-width: 22px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.check-square-native {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.check-square-face {
-  position: absolute;
-  inset: 0;
-  box-sizing: border-box;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  min-height: 26px;
+  padding: 0;
   border-radius: 5px;
   border: 2px solid #e8b8d8;
   background: #fffefb;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  cursor: pointer;
+  touch-action: manipulation;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
   transition:
     background 0.15s ease,
     border-color 0.15s ease,
     box-shadow 0.15s ease;
 }
 
-.check-square-wrap:hover .check-square-face {
+.check-square-btn:hover {
   border-color: #c4b5f0;
   box-shadow: 0 0 0 2px rgba(200, 185, 242, 0.25);
 }
 
-.check-square-wrap:has(.check-square-native:checked) .check-square-face {
+.check-square-btn--on {
   background: linear-gradient(145deg, #d4c8f7 0%, #c4b5f0 100%);
   border-color: #b8a9e8;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
-.check-square-wrap:has(.check-square-native:checked) .check-square-face::after {
+.check-square-btn--on::after {
   content: '\2713';
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1;
   color: #fffefb;
   font-weight: 700;
@@ -281,7 +268,7 @@
 
 /* 캡슐형 입력 */
 .checklist-pill {
-  flex: 1;
+  grid-column: 2;
   min-width: 0;
   border: 2px solid #ffd0e0;
   border-radius: 999px;
@@ -308,7 +295,8 @@
 }
 
 .remove-item-btn {
-  flex: 0 0 28px;
+  grid-column: 3;
+  justify-self: center;
   width: 28px;
   height: 28px;
   min-width: 28px;
@@ -347,7 +335,7 @@
 }
 
 /* 완료 항목 입력 스타일 */
-.checklist-row:has(.check-square-native:checked) .checklist-pill {
+.checklist-row:has(.check-square-btn--on) .checklist-pill {
   text-decoration: line-through;
   color: #b8a8c4;
   background: linear-gradient(180deg, #faf8ff 0%, #f3eeff 100%);

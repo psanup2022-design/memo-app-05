@@ -5,6 +5,13 @@ const STORAGE_KEY = 'memo-app-c05-notes'
 const EMPTY_TITLE = '\uC81C\uBAA9 \uC5C6\uB294 \uBA54\uBAA8'
 const EMPTY_ITEM_TEXT = '\uD56D\uBAA9\uC744 \uC785\uB825\uD558\uC138\uC694.'
 
+/** localStorage 등에서 문자열로 들어온 값 때문에 체크 UI가 깨지지 않게 함 */
+function normalizeChecked(value) {
+  if (value === true || value === 1) return true
+  if (value === 'true' || value === '1') return true
+  return false
+}
+
 function createChecklistItem(text = '') {
   return {
     id: crypto.randomUUID(),
@@ -38,7 +45,7 @@ function loadNotesFromStorage() {
         ? note.checklist.map((item) => ({
             id: item?.id ?? crypto.randomUUID(),
             text: String(item?.text ?? ''),
-            checked: Boolean(item?.checked),
+            checked: normalizeChecked(item?.checked),
           }))
         : String(note.content ?? '')
             .split('\n')
@@ -173,7 +180,7 @@ export default function App() {
                 item.id === itemId
                   ? {
                       ...item,
-                      checked: !item.checked,
+                      checked: !normalizeChecked(item.checked),
                     }
                   : item,
               ),
@@ -319,17 +326,15 @@ export default function App() {
                 ) : null}
                 <div className="checklist-editor">
                   {note.checklist.map((item) => (
-                    <div className="checklist-row" key={item.id}>
-                      <label className="check-square-wrap">
-                        <input
-                          type="checkbox"
-                          className="check-square-native"
-                          checked={item.checked}
-                          onChange={() => handleChecklistToggle(note.id, item.id)}
-                          aria-label={item.checked ? '\uC644\uB8CC \uCDE8\uC18C' : '\uC644\uB8CC'}
-                        />
-                        <span className="check-square-face" aria-hidden="true" />
-                      </label>
+                    <div className="checklist-row" key={`${note.id}-${item.id}`}>
+                      <button
+                        type="button"
+                        role="checkbox"
+                        aria-checked={normalizeChecked(item.checked)}
+                        aria-label={normalizeChecked(item.checked) ? '\uC644\uB8CC \uCDE8\uC18C' : '\uC644\uB8CC'}
+                        className={`check-square-btn ${normalizeChecked(item.checked) ? 'check-square-btn--on' : ''}`}
+                        onClick={() => handleChecklistToggle(note.id, item.id)}
+                      />
                       <input
                         type="text"
                         className="checklist-pill"
