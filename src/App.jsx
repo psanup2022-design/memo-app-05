@@ -258,9 +258,7 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <h1 className="app-header__title">
-          <span className="app-header__title-inner">
-            {'\u2665'} {'\uBA54\uBAA8'} check {'\u2665'}
-          </span>
+          <span className="app-header__title-inner">{'\u2665'}check list{'\u2665'}</span>
         </h1>
         <p className="app-header__sub">
           {'\uC0C8\uBA54\uBAA8 · \uCCB4\uD06C · \uAC80\uC0C9 · \uBC14\uB85C \uC785\uB825\uD574\uC694'}

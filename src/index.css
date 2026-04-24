@@ -1,14 +1,15 @@
 :root {
   color-scheme: light;
   font-family: 'Varela Round', 'Segoe UI', sans-serif;
-  --lavender: #b8a9e8;
-  --lavender-deep: #9b8ad4;
-  --pink-soft: #ffe4ec;
-  --pink-field: #ffd6e4;
-  --pink-border: #f5b8d0;
-  --white: #fffefb;
-  --text: #5c5266;
-  --bubble-outline: #8b7a9e;
+  --lavender: #c9b8ec;
+  --lavender-mid: #b8a9e8;
+  --lavender-deep: #8b7aa8;
+  --lavender-outline: #6b5b8f;
+  --pink-glass: rgba(255, 236, 248, 0.72);
+  --pink-border: rgba(232, 190, 220, 0.85);
+  --brown-soft: #b09078;
+  --white: #ffffff;
+  --text: #6b6088;
 }
 
 * {
@@ -18,7 +19,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(165deg, #fff5fb 0%, #f0e8ff 45%, #ffe8f4 100%);
+  background: var(--white);
   color: var(--text);
 }
 

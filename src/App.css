@@ -1,48 +1,57 @@
+/* 템플릿 느낌: 흰 배경 · 라벤더/핑크 · 버블 타이틀 · 캡슐 입력 글로우 */
+
 .app {
-  width: min(960px, 94vw);
+  width: min(920px, 94vw);
   margin: 0 auto;
-  padding: 28px 16px 120px;
+  padding: 32px 16px 130px;
   position: relative;
+  background-image:
+    radial-gradient(ellipse 70% 45% at 50% -15%, rgba(230, 218, 255, 0.45), transparent),
+    radial-gradient(ellipse 55% 35% at 100% 105%, rgba(255, 228, 240, 0.35), transparent);
 }
 
-/* —— 헤더 (스티커 느낌 타이틀) —— */
+/* —— 헤더: ♥check list♥ 버블 글자 —— */
 .app-header {
   text-align: center;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .app-header__title {
   margin: 0;
-  font-size: clamp(1.75rem, 4vw, 2.35rem);
-  font-weight: 400;
-  letter-spacing: 0.02em;
+  line-height: 1.15;
 }
 
 .app-header__title-inner {
   display: inline-block;
-  padding: 10px 22px 12px;
-  border-radius: 999px;
-  color: #fffefb;
-  background: linear-gradient(180deg, #c9b8f2 0%, #b8a9e8 55%, #a898e0 100%);
+  padding: 6px 4px 10px;
+  font-family: 'Fredoka', 'Varela Round', sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.85rem, 5vw, 2.5rem);
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: #e2d6fb;
   text-shadow:
-    0 0 0 2px #9b8ad4,
-    0 1px 0 #7d6bb8,
-    0 2px 0 rgba(123, 105, 180, 0.35);
-  box-shadow:
-    0 3px 0 #8f7bc9,
-    0 8px 24px rgba(155, 138, 212, 0.45);
-  border: 2px solid #dfd6ff;
+    0 0 1px #fff,
+    0 0 3px #fff,
+    0 0 14px rgba(200, 185, 255, 0.95),
+    1px 0 0 #6b5b8f,
+    -1px 0 0 #6b5b8f,
+    0 1px 0 #6b5b8f,
+    0 -1px 0 #6b5b8f,
+    2px 2px 0 rgba(139, 122, 168, 0.55),
+    3px 3px 0 rgba(159, 139, 200, 0.25);
+  filter: drop-shadow(0 4px 12px rgba(184, 169, 232, 0.35));
 }
 
 .app-header__sub {
-  margin: 14px 0 0;
-  font-size: 0.92rem;
-  color: #8b7fa3;
+  margin: 12px 0 0;
+  font-size: 0.88rem;
+  color: #a898c4;
 }
 
 /* —— 툴바 —— */
 .toolbar {
-  margin-top: 22px;
+  margin-top: 20px;
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
@@ -52,70 +61,76 @@
 .toolbar input {
   flex: 1;
   min-width: 220px;
-  border: 2px solid var(--pink-border, #f5b8d0);
+  border: 2px solid rgba(200, 185, 230, 0.55);
   border-radius: 999px;
-  background: #fffefb;
+  background: rgba(255, 248, 252, 0.9);
   padding: 11px 18px;
-  color: var(--text, #5c5266);
-  box-shadow: inset 0 1px 3px rgba(255, 182, 210, 0.25);
+  color: var(--text);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.95),
+    0 2px 14px rgba(184, 169, 232, 0.18);
 }
 
 .toolbar input:focus {
   outline: none;
   border-color: #c4b5f0;
   box-shadow:
-    inset 0 1px 3px rgba(255, 182, 210, 0.2),
-    0 0 0 3px rgba(200, 185, 242, 0.35);
+    inset 0 1px 2px rgba(255, 255, 255, 0.95),
+    0 0 0 4px rgba(200, 185, 242, 0.28),
+    0 4px 20px rgba(184, 169, 232, 0.22);
 }
 
 .primary-btn {
-  border: none;
   border-radius: 999px;
   padding: 11px 22px;
-  background: linear-gradient(180deg, #d4c8f7 0%, #c4b5f0 100%);
-  color: #4f4670;
+  background: linear-gradient(180deg, #e4dafb 0%, #d4c8f7 45%, #c9b8ec 100%);
+  color: #5a4d78;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 3px 0 #a898e0;
-  border: 2px solid #e8e0ff;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 3px 0 #b8a9e0,
+    0 8px 22px rgba(184, 169, 232, 0.35);
 }
 
 .primary-btn:hover {
-  filter: brightness(1.04);
+  filter: brightness(1.03);
 }
 
 .primary-btn:active {
   transform: translateY(2px);
-  box-shadow: 0 1px 0 #a898e0;
+  box-shadow: 0 1px 0 #b8a9e0;
 }
 
 /* —— 그리드 —— */
 .notes-grid {
-  margin-top: 22px;
+  margin-top: 24px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 18px;
+  gap: 20px;
 }
 
 .empty-state {
   margin: 16px 0;
-  padding: 20px;
+  padding: 22px;
   text-align: center;
-  color: #9b8ab0;
-  background: rgba(255, 254, 251, 0.65);
-  border-radius: 20px;
-  border: 2px dashed #f0c8dd;
+  color: #a898c4;
+  background: rgba(255, 252, 255, 0.95);
+  border-radius: 24px;
+  border: 2px dashed rgba(200, 185, 230, 0.55);
+  box-shadow: 0 4px 24px rgba(184, 169, 232, 0.12);
 }
 
-/* —— 메모 카드 —— */
+/* —— 메모 카드 (흰지 + 소프트 보라 그림자) —— */
 .note-card {
-  background: #fffefb;
-  border: 2px solid #f5d4e8;
-  border-radius: 22px;
-  padding: 14px 16px 16px;
+  background: #ffffff;
+  border: 2px solid rgba(210, 198, 240, 0.65);
+  border-radius: 26px;
+  padding: 16px 18px 18px;
   box-shadow:
-    0 4px 0 #f8e0ec,
-    0 12px 28px rgba(184, 169, 232, 0.18);
+    0 2px 0 rgba(245, 238, 255, 0.9),
+    0 10px 32px rgba(184, 169, 232, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.8) inset;
 }
 
 .note-head {
@@ -128,7 +143,7 @@
 
 .note-date {
   font-size: 11px;
-  color: #a898c4;
+  color: #b8a8d4;
 }
 
 .note-actions {
@@ -138,80 +153,83 @@
 }
 
 .note-actions button {
-  border: 2px solid #f0c8dd;
+  border: 2px solid rgba(200, 185, 230, 0.55);
   border-radius: 999px;
-  padding: 6px 12px;
-  background: #fff5f9;
-  color: #7d6b9a;
+  padding: 6px 13px;
+  background: rgba(255, 252, 255, 0.95);
+  color: #8b7aa8;
   cursor: pointer;
   font-size: 12px;
+  box-shadow: 0 2px 8px rgba(184, 169, 232, 0.12);
 }
 
 .note-actions button:hover {
-  background: #ffeef6;
-  border-color: #e8b8d8;
+  background: #fef8ff;
+  border-color: #d4c8f7;
 }
 
 .note-actions .save-btn {
-  border-color: #b8e0c8;
-  background: #f0fff5;
+  border-color: rgba(160, 210, 180, 0.85);
+  background: rgba(248, 255, 252, 0.95);
   color: #3d7a55;
   font-weight: 700;
 }
 
 .note-actions .danger-btn {
-  border-color: #ffc4d4;
-  background: #fff5f7;
+  border-color: rgba(255, 180, 200, 0.75);
+  background: rgba(255, 250, 252, 0.98);
   color: #c94a6b;
 }
 
-/* —— 본문 (제목 + 체크리스트) —— */
+/* —— 본문 —— */
 .note-body {
-  margin-top: 12px;
+  margin-top: 14px;
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .title-pill {
   width: 100%;
-  border: 2px solid #f5c9df;
-  border-radius: 999px;
-  background: linear-gradient(180deg, #fff0f6 0%, #ffe4ec 100%);
-  padding: 10px 16px;
-  color: #5c5266;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  border: 2px solid rgba(200, 185, 230, 0.5);
+  border-radius: 28px;
+  background: rgba(255, 240, 248, 0.55);
+  padding: 11px 18px;
+  color: var(--text);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.9),
+    0 2px 16px rgba(184, 169, 232, 0.15);
 }
 
 .title-pill::placeholder {
-  color: #c4a8c0;
+  color: #c9b8d8;
 }
 
 .title-pill:focus {
   outline: none;
   border-color: #c4b5f0;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.85),
-    0 0 0 3px rgba(200, 185, 242, 0.3);
+    inset 0 1px 2px rgba(255, 255, 255, 0.9),
+    0 0 0 4px rgba(200, 185, 242, 0.25),
+    0 4px 20px rgba(184, 169, 232, 0.18);
 }
 
 .checklist-hint {
   margin: 0;
   font-size: 11px;
-  color: #c4a8c0;
-  line-height: 1.4;
+  color: #c4b5e0;
+  line-height: 1.45;
 }
 
 .checklist-editor {
   display: grid;
-  gap: 8px;
+  gap: 12px;
 }
 
-/* 그리드로 체크 칸과 입력이 절대 겹치지 않게 (클릭 누락 방지) */
 .checklist-row {
   display: grid;
-  grid-template-columns: 36px minmax(0, 1fr) 36px;
+  grid-template-columns: 38px minmax(0, 1fr) 36px;
   align-items: center;
-  column-gap: 10px;
+  column-gap: 12px;
 }
 
 .checklist-row__spacer {
@@ -221,73 +239,82 @@
   height: 28px;
 }
 
-/* 사각 체크 — 버튼(항상 클릭 가능, 수정 버튼과 무관) */
+/* 사각 체크 — 라벤더 테두리 */
 .check-square-btn {
   grid-column: 1;
   justify-self: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
-  min-width: 26px;
-  min-height: 26px;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
   padding: 0;
-  border-radius: 5px;
-  border: 2px solid #e8b8d8;
-  background: #fffefb;
+  border-radius: 4px;
+  border: 2px solid #c9b8ec;
+  background: #fff;
   cursor: pointer;
   touch-action: manipulation;
   position: relative;
   z-index: 2;
   box-sizing: border-box;
+  box-shadow: 0 1px 6px rgba(184, 169, 232, 0.2);
   transition:
-    background 0.15s ease,
     border-color 0.15s ease,
-    box-shadow 0.15s ease;
+    box-shadow 0.15s ease,
+    background 0.15s ease;
 }
 
 .check-square-btn:hover {
-  border-color: #c4b5f0;
-  box-shadow: 0 0 0 2px rgba(200, 185, 242, 0.25);
+  border-color: #b8a9e8;
+  box-shadow:
+    0 0 0 3px rgba(200, 185, 242, 0.25),
+    0 2px 10px rgba(184, 169, 232, 0.25);
 }
 
 .check-square-btn--on {
-  background: linear-gradient(145deg, #d4c8f7 0%, #c4b5f0 100%);
+  background: linear-gradient(160deg, #e4dafb 0%, #d4c8f7 100%);
   border-color: #b8a9e8;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 2px 8px rgba(155, 138, 212, 0.3);
 }
 
 .check-square-btn--on::after {
   content: '\2713';
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1;
   color: #fffefb;
   font-weight: 700;
+  text-shadow: 0 1px 0 rgba(107, 91, 143, 0.35);
 }
 
-/* 캡슐형 입력 */
+/* 캡슐 입력 — 반투명 핑크/라벤더 + 보라 글로우 */
 .checklist-pill {
   grid-column: 2;
   min-width: 0;
-  border: 2px solid #ffd0e0;
-  border-radius: 999px;
-  background: linear-gradient(180deg, #fff5f9 0%, #ffe4ec 100%);
-  padding: 9px 16px;
-  color: #5c5266;
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba(200, 185, 230, 0.45);
+  border-radius: 28px;
+  background: rgba(255, 236, 248, 0.55);
+  padding: 10px 18px;
+  color: var(--text);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.85),
+    0 2px 18px rgba(184, 169, 232, 0.22);
 }
 
 .checklist-pill::placeholder {
-  color: #dcb8d0;
+  color: #d4c4e8;
 }
 
 .checklist-pill:focus {
   outline: none;
-  border-color: #c4b5f0;
+  border-color: rgba(184, 169, 232, 0.85);
   box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.7),
-    0 0 0 3px rgba(200, 185, 242, 0.28);
+    inset 0 1px 2px rgba(255, 255, 255, 0.85),
+    0 0 0 4px rgba(200, 185, 242, 0.22),
+    0 4px 22px rgba(184, 169, 232, 0.28);
 }
 
 .checklist-pill:disabled {
@@ -300,54 +327,55 @@
   width: 28px;
   height: 28px;
   min-width: 28px;
-  border: none;
   border-radius: 50%;
-  background: #fff0f4;
-  color: #d889a8;
+  background: rgba(255, 240, 248, 0.9);
+  color: #d4a8c4;
   font-size: 1.1rem;
   line-height: 1;
   padding: 0;
   cursor: pointer;
+  border: 2px solid rgba(240, 200, 220, 0.5);
 }
 
 .remove-item-btn:hover {
   color: #c94a6b;
-  background: #ffe0ea;
+  background: #fff5f9;
 }
 
 .add-item-btn {
   justify-self: start;
   margin-top: 2px;
-  border: 2px dashed #f0b8d8;
+  border: 2px dashed rgba(200, 185, 230, 0.65);
   border-radius: 999px;
-  background: rgba(255, 245, 250, 0.8);
+  background: rgba(255, 252, 255, 0.9);
   color: #b8a9e8;
   font-size: 12px;
   font-weight: 700;
-  padding: 8px 16px;
+  padding: 8px 18px;
   cursor: pointer;
+  box-shadow: 0 2px 12px rgba(184, 169, 232, 0.12);
 }
 
 .add-item-btn:hover {
-  background: #fff5fb;
-  border-color: #c4b5f0;
+  background: #fefbff;
+  border-color: #d4c8f7;
   color: #8f7bc9;
 }
 
-/* 완료 항목 입력 스타일 */
 .checklist-row:has(.check-square-btn--on) .checklist-pill {
   text-decoration: line-through;
-  color: #b8a8c4;
-  background: linear-gradient(180deg, #faf8ff 0%, #f3eeff 100%);
-  border-color: #e8e0f5;
+  color: #b0a0c8;
+  background: rgba(248, 244, 255, 0.55);
+  border-color: rgba(200, 185, 230, 0.35);
 }
 
-/* —— 하단 장식 (말풍선 + 토끼) —— */
+/* —— 하단: 말풍선(갈색 테두리 + 보라 글로우) + 캐릭터 —— */
 .app-footer {
   position: fixed;
-  right: max(12px, calc(50vw - 480px));
-  bottom: 12px;
+  right: max(10px, calc(50vw - 460px));
+  bottom: 10px;
   display: flex;
+  flex-direction: row;
   align-items: flex-end;
   gap: 0;
   pointer-events: none;
@@ -356,27 +384,29 @@
 
 .app-footer__speech {
   position: relative;
-  margin-right: -6px;
-  margin-bottom: 18px;
-  padding: 8px 12px 10px;
-  max-width: 140px;
+  margin-right: -4px;
+  margin-bottom: 22px;
+  padding: 10px 14px 11px;
+  max-width: 148px;
   font-size: 12px;
-  line-height: 1.35;
-  color: #6b5d7a;
-  background: #fffefb;
-  border: 2px solid #8b7a9e;
-  border-radius: 10px;
-  box-shadow: 2px 3px 0 rgba(139, 122, 158, 0.15);
+  line-height: 1.4;
+  color: #7a6a8a;
+  background: #fff;
+  border: 2px solid #b09078;
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 4px rgba(220, 200, 255, 0.45),
+    0 8px 28px rgba(184, 169, 232, 0.35);
 }
 
 .app-footer__speech::after {
   content: '';
   position: absolute;
-  right: -8px;
-  bottom: 10px;
-  border-width: 6px 0 6px 8px;
+  right: -9px;
+  bottom: 12px;
+  border-width: 7px 0 7px 9px;
   border-style: solid;
-  border-color: transparent transparent transparent #8b7a9e;
+  border-color: transparent transparent transparent #b09078;
 }
 
 .app-footer__speech span {
@@ -384,13 +414,17 @@
 }
 
 .app-footer__bunny {
-  filter: drop-shadow(2px 4px 6px rgba(184, 169, 232, 0.35));
+  filter: drop-shadow(0 0 10px rgba(184, 169, 232, 0.55)) drop-shadow(1px 2px 0 #c9b0a0);
+}
+
+.app-footer__bunny svg ellipse:first-child {
+  stroke: #c9b0a0;
 }
 
 @media (max-width: 520px) {
   .app-footer {
-    right: 8px;
-    transform: scale(0.88);
+    right: 6px;
+    transform: scale(0.85);
     transform-origin: bottom right;
   }
 }
