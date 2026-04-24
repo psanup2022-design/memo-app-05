@@ -615,8 +615,8 @@
   filter: drop-shadow(0 0 10px rgba(184, 169, 232, 0.55)) drop-shadow(1px 2px 0 #c9b0a0);
 }
 
-.app-mascot__bunny svg ellipse:first-child {
-  stroke: #c9b0a0;
+.app-mascot__bunny-svg {
+  display: block;
 }
 
 @media (max-width: 520px) {

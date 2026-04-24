@@ -482,20 +482,109 @@ export default function App() {
           <span>{'\uC548\uB155!'}</span>
         </div>
         <div className="app-mascot__bunny" aria-hidden="true">
-          <svg viewBox="0 0 120 100" width="100" height="84" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="58" cy="62" rx="38" ry="32" fill="#fffefb" stroke="#e8d4f0" strokeWidth="2" />
-            <ellipse cx="40" cy="58" rx="6" ry="7" fill="#ffd0dc" />
-            <ellipse cx="76" cy="58" rx="6" ry="7" fill="#ffd0dc" />
-            <circle cx="48" cy="52" r="3" fill="#5c5266" />
-            <path d="M72 50 Q78 48 78 52" stroke="#5c5266" strokeWidth="2" fill="none" strokeLinecap="round" />
-            <ellipse cx="58" cy="68" rx="4" ry="2.5" fill="#ffd0dc" opacity="0.7" />
+          <svg
+            className="app-mascot__bunny-svg"
+            viewBox="0 0 120 118"
+            width="100"
+            height="98"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* 그림자 */}
+            <ellipse cx="60" cy="112" rx="30" ry="5" fill="#b8a9e8" opacity="0.32" />
+            {/* 귀 (뒤 레이어) */}
+            <g strokeLinecap="round" strokeLinejoin="round">
+              <ellipse
+                cx="36"
+                cy="38"
+                rx="13"
+                ry="32"
+                fill="#ece6fc"
+                stroke="#c9b8ec"
+                strokeWidth="2"
+                transform="rotate(-16 36 38)"
+              />
+              <ellipse
+                cx="34"
+                cy="40"
+                rx="5.5"
+                ry="16"
+                fill="#ffd8ea"
+                opacity="0.92"
+                transform="rotate(-16 34 40)"
+              />
+              <ellipse
+                cx="84"
+                cy="38"
+                rx="13"
+                ry="32"
+                fill="#ece6fc"
+                stroke="#c9b8ec"
+                strokeWidth="2"
+                transform="rotate(16 84 38)"
+              />
+              <ellipse
+                cx="86"
+                cy="40"
+                rx="5.5"
+                ry="16"
+                fill="#ffd8ea"
+                opacity="0.92"
+                transform="rotate(16 86 40)"
+              />
+            </g>
+            {/* 몸 */}
+            <ellipse cx="60" cy="96" rx="28" ry="20" fill="#fffefb" stroke="#e8d4f0" strokeWidth="2" />
+            <ellipse cx="60" cy="98" rx="14" ry="11" fill="#fff5fb" opacity="0.9" />
+            {/* 앞발 */}
+            <ellipse cx="42" cy="94" rx="9" ry="11" fill="#fffefb" stroke="#e8d4f0" strokeWidth="1.5" transform="rotate(-12 42 94)" />
+            <ellipse cx="78" cy="94" rx="9" ry="11" fill="#fffefb" stroke="#e8d4f0" strokeWidth="1.5" transform="rotate(12 78 94)" />
+            {/* 머리 */}
+            <circle cx="60" cy="60" r="34" fill="#fffefb" stroke="#e8d4f0" strokeWidth="2" />
+            {/* 볼 */}
+            <ellipse cx="40" cy="66" rx="8" ry="5" fill="#ffc8dc" opacity="0.5" />
+            <ellipse cx="80" cy="66" rx="8" ry="5" fill="#ffc8dc" opacity="0.5" />
+            {/* 눈 */}
+            <ellipse cx="48" cy="56" rx="8" ry="9" fill="#4a3f5c" />
+            <ellipse cx="72" cy="56" rx="8" ry="9" fill="#4a3f5c" />
+            <ellipse cx="50" cy="53" rx="3" ry="3.5" fill="#fffefb" />
+            <ellipse cx="74" cy="53" rx="3" ry="3.5" fill="#fffefb" />
+            <circle cx="46" cy="58" r="1.4" fill="#fffefb" opacity="0.65" />
+            <circle cx="70" cy="58" r="1.4" fill="#fffefb" opacity="0.65" />
+            {/* 코 */}
             <path
-              d="M22 28 Q18 8 38 18 Q48 4 58 20 Q68 4 78 18 Q98 8 94 28 Q88 36 58 32 Q30 36 22 28"
-              fill="#c4b5f0"
-              stroke="#b8a9e8"
-              strokeWidth="1.5"
+              d="M60 64.5 L57.5 69.5 L62.5 69.5 Z"
+              fill="#ffb8cf"
+              stroke="#f0a0b8"
+              strokeWidth="0.9"
+              strokeLinejoin="round"
             />
-            <path d="M36 20 Q44 26 52 22" fill="none" stroke="#dfd6f5" strokeWidth="1" opacity="0.8" />
+            {/* 입 */}
+            <path
+              d="M56.5 72 Q60 76.5 63.5 72"
+              fill="none"
+              stroke="#9a88b0"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            />
+            {/* 귀 하이라이트 */}
+            <path
+              d="M30 24 Q34 18 38 26"
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              opacity="0.55"
+              transform="rotate(-16 34 24)"
+            />
+            <path
+              d="M82 24 Q86 18 90 26"
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              opacity="0.55"
+              transform="rotate(16 86 24)"
+            />
           </svg>
         </div>
       </aside>
